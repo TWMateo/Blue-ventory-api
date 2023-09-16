@@ -71,11 +71,18 @@ const getCompra = async (req, res) =>{
     try {
         const data = await db.any('SELECT * FROM tbl_compra;');
         const dataDetalles = await db.any('SELECT * from tbl_det_compra;');
-        console.log(dataDetalles);
-        // for()
+        let response = [];
+        for(const dat of data){
+            const cabecera = dat;
+            const detalles = dataDetalles.filter(detBuscado => detBuscado.compra_id === dat.compra_id).map( detFiltrado => {
+                const {compra_id, ...campos} = detFiltrado;
+                return campos;
+            });
+            response.push({...cabecera,detalles:detalles});
+        }
         return res.json({
             code:0,
-            data:data
+            data:response
         });
     } catch (error) {
         const errorJson = crearErrorJson('E009');
