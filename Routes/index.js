@@ -24,5 +24,7 @@ router.put('/api/producto/actualizar', putProducto)
 //Compra
 router.get('/api/compra', getCompra);
 router.post('/api/compra/nuevo',postCompra);
+//Venta
+
 
 module.exports = router;

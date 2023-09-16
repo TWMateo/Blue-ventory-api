@@ -58,7 +58,6 @@ const postProducto = async (req, res) => {
 
     try {
         const response = await db.any(`INSERT INTO tbl_producto (descripcion_producto,precio_venta,stock_disponible,talla_producto,marca_id,categoria_id) VALUES($1,$2,$3,$4,$5,$6) RETURNING producto_id;`, [descripcion_producto, precio_venta, stock_disponible, talla_producto, marca_id, categoria_id]);
-        console.log(response)
         return res.json({
             code: 0,
             message: `Producto con descripción '${descripcion_producto}' registrado con exito.`,
@@ -89,7 +88,6 @@ const putProducto = async (req, res) => {
         return res.json(msgError);
     }
     for (const obj of cambios) {
-        console.log(obj)
         if (!obj[1]) {
             let rerror
             rerror = crearErrorJson('E001', obj[0]);
