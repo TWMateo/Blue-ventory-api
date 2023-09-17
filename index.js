@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 app.disable('x-powered-by')
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 //Midleware (se ejecuta entre la request y response)
 //Midle - Analiza y procesa las solicitudes con datos en formatos json
