@@ -1,5 +1,4 @@
 const express = require('express');
-const { db } = require('../Config/cnn');
 const router = express.Router();
 
 //Variables que llaman a metodos por desestructuración
@@ -8,6 +7,8 @@ const{ getMarca, postMarca, putMarcaById } = require('../Controllers/controlador
 const { getCategoria, postCategoria, putCategoriaById } = require('../Controllers/controlador-categoria')
 const { getProducto, postProducto, putProducto } = require('../Controllers/controlador-producto');
 const { postCompra, getCompra } = require('../Controllers/controlador-compra');
+const { postVenta,getVenta } = require('../Controllers/controlador-venta');
+
 //RUTAS
 //Marca
 router.get('/api/marca',getMarca);
@@ -25,6 +26,8 @@ router.put('/api/producto/actualizar', putProducto)
 router.get('/api/compra', getCompra);
 router.post('/api/compra/nuevo',postCompra);
 //Venta
+router.get('/api/venta',getVenta);
+router.post('/api/venta/nuevo', postVenta);
 
 
 module.exports = router;

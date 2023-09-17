@@ -1,8 +1,6 @@
 const { db } = require('../Config/cnn');
 const { validarFormatoFecha, validarExistenciaBD } = require('../utils/helpers');
 const { crearErrorJson } = require('../middlewares/error-handler');
-const { putProducto } = require('../Controllers/controlador-producto');
-const { json } = require('express/lib/response');
 
 const postCompra = async (req, res) => {
     const { fecha_compra, total_compra, detalles_compra } = req.body;
@@ -31,8 +29,8 @@ const postCompra = async (req, res) => {
             if (!(typeof (dc['compra_id']) === 'number')) {
                 msgError.push(crearErrorJson('E014', 'compra_id', `"${dc['compra_id']}"`));
             }
-            if (!(typeof (dc['precio_unit_det_compra']) === 'number')) {
-                msgError.push(crearErrorJson('E014', 'precio_unit_det_compra', `"${dc['precio_unit_det_compra']}"`));
+            if (!(typeof (dc['precio_det_compra']) === 'number')) {
+                msgError.push(crearErrorJson('E014', 'precio_det_compra', `"${dc['precio_det_compra']}"`));
             }
             if (!(typeof (dc['cantidad_det_compra']) == 'number')) {
                 msgError.push(crearErrorJson('E014', 'cantidad_det_compra', `"${dc['cantidad_det_compra']}"`));
@@ -55,8 +53,8 @@ const postCompra = async (req, res) => {
 
     try {
         for (const dc of detalles_compra) {
-            let total_det_compra = dc['precio_unit_det_compra'] * dc['cantidad_det_compra'];
-            const response = await db.none(`INSERT INTO tbl_det_compra(producto_id,compra_id,precio_unit_det_compra,cantidad_det_compra,total_det_compra) VALUES($1,$2,$3,$4,$5)`, [dc['producto_id'], compra_response[0]['compra_id'], dc['precio_unit_det_compra'], dc['cantidad_det_compra'], total_det_compra]);
+            let total_det_compra = dc['precio_det_compra'] * dc['cantidad_det_compra'];
+            const response = await db.none(`INSERT INTO tbl_det_compra(producto_id,compra_id,precio_det_compra,cantidad_det_compra,total_det_compra) VALUES($1,$2,$3,$4,$5)`, [dc['producto_id'], compra_response[0]['compra_id'], dc['precio_det_compra'], dc['cantidad_det_compra'], total_det_compra]);
             const stock = await db.any(`SELECT stock_disponible FROM tbl_producto WHERE producto_id=$1`, [dc['producto_id']]);
             const actualizarProducto = await db.none('UPDATE tbl_producto SET stock_disponible=$2 WHERE producto_id=$1',[dc['producto_id'],stock[0].stock_disponible + dc['cantidad_det_compra']]);
         }
@@ -65,7 +63,7 @@ const postCompra = async (req, res) => {
             message: `¡Compra #${compra_response[0]['compra_id']} registrada con exito!`
         })
     } catch (error) {
-        console.log(error);
+        console.log(error)
         return res.json(crearErrorJson('E009'));
     }
 }
@@ -91,7 +89,6 @@ const getCompra = async (req, res) => {
         const errorJson = crearErrorJson('E009');
         return res.json(errorJson);
     }
-
 }
 
 module.exports = {

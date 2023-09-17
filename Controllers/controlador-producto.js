@@ -11,10 +11,7 @@ const getProducto = async (req, res) => {
         });
     } catch (error) {
         const msgError = crearErrorJson('E009')
-        return res.json({
-            code: 'E009',
-            message: 'Solicitud no procesable - Error en la base de datos'
-        });
+        return res.json(msgError);
     }
 }
 
