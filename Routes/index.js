@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+var cors = require('cors');
+router.use(cors());
 
 //Variables que llaman a metodos por desestructuración
 //de los distintos controles
