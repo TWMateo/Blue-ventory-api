@@ -2,8 +2,19 @@ const { db } = require('../Config/cnn');
 const { crearErrorJson } = require('../middlewares/error-handler')
 
 const getProducto = async (req, res) => {
+    const { page, limit } = req.query;
+    if(!page){
+        return res.json(crearErrorJson('E001','page'));
+    }
+    if(!limit){
+        return res.json(crearErrorJson('E001','limit'));
+    }
+    let offset = (page - 1) * limit;
     try {
-        let response = await db.any('SELECT * FROM vw_productos');
+        let response = await db.any('SELECT * FROM vw_productos LIMIT $1 OFFSET $2',[limit,offset]);
+        if(!response.length){
+            return res.json(crearErrorJson('E003'));
+        }
         return res.json({
             code: 0,
             message: 'Ok',
@@ -58,7 +69,7 @@ const postProducto = async (req, res) => {
         return res.json({
             code: 0,
             message: `Producto con descripción '${descripcion_producto}' registrado con exito.`,
-            data:response[0]
+            data: response[0]
         })
     } catch (error) {
         msgError = crearErrorJson('E009');
