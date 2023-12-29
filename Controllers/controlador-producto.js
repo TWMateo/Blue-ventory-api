@@ -1,24 +1,27 @@
+const { response } = require('express');
 const { db } = require('../Config/cnn');
 const { crearErrorJson } = require('../middlewares/error-handler')
 
 const getProducto = async (req, res) => {
     const { page, limit } = req.query;
-    if(!page){
-        return res.json(crearErrorJson('E001','page'));
+    if (!page) {
+        return res.json(crearErrorJson('E001', 'page'));
     }
-    if(!limit){
-        return res.json(crearErrorJson('E001','limit'));
+    if (!limit) {
+        return res.json(crearErrorJson('E001', 'limit'));
     }
     let offset = (page - 1) * limit;
     try {
-        let response = await db.any('SELECT * FROM vw_productos LIMIT $1 OFFSET $2',[limit,offset]);
-        if(!response.length){
+        let response = await db.any('SELECT * FROM vw_productos LIMIT $1 OFFSET $2', [limit, offset]);
+        let cantidadProductos = await db.any('SELECT COUNT(*) AS cantidad_productos FROM tbl_producto;')
+        if (!response.length) {
             return res.json(crearErrorJson('E003'));
         }
         return res.json({
             code: 0,
             message: 'Ok',
-            response: response
+            response: response,
+            totalProductos:cantidadProductos[0].cantidad_productos
         });
     } catch (error) {
         const msgError = crearErrorJson('E009')
@@ -73,6 +76,43 @@ const postProducto = async (req, res) => {
         })
     } catch (error) {
         msgError = crearErrorJson('E009');
+        return res.json(msgError);
+    }
+}
+
+const getProductByDescription = async (req, res) => {
+    try {
+        const { descripcion, marca, categoria, limit, page } = req.body;
+        if (!descripcion) {
+            return res.status(400).json({ error: 'Se requiere una descripción para la búsqueda.' });
+        }
+        let offset = (page - 1) * limit;
+        const response = await db.any(`
+        SELECT p.producto_id AS id,
+               c.nombre_categoria AS categoria,
+               m.nombre_marca AS marca,
+               p.descripcion_producto AS descripcion,
+               p.talla_producto AS talla,
+               p.stock_disponible AS stock,
+               p.precio_venta AS precio
+        FROM tbl_producto p
+          JOIN tbl_categoria c ON c.categoria_id = p.categoria_id
+          JOIN tbl_marca m ON m.marca_id = p.marca_id
+        WHERE p.stock_disponible > 0
+          AND LOWER(p.descripcion_producto) LIKE LOWER($1)
+		  AND m.nombre_marca=$2 AND c.nombre_categoria=$3 LIMIT $4 offset $5;
+      `, [`%${descripcion}%`, marca, categoria, limit, offset]);
+        if (!response.length) {
+            return res.json(crearErrorJson('E003'));
+        }
+        return res.json({
+            code: 0,
+            message: 'Ok',
+            response: response,
+            totalProductos:response.length
+        });
+    } catch (error) {
+        const msgError = crearErrorJson('E009')
         return res.json(msgError);
     }
 }
@@ -148,5 +188,6 @@ const putProducto = async (req, res) => {
 module.exports = {
     getProducto,
     postProducto,
-    putProducto
+    putProducto,
+    getProductByDescription
 }

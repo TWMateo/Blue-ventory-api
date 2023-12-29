@@ -7,7 +7,7 @@ router.use(cors());
 //de los distintos controles
 const{ getMarca, postMarca, putMarcaById } = require('../Controllers/controlador-marca')
 const { getCategoria, postCategoria, putCategoriaById } = require('../Controllers/controlador-categoria')
-const { getProducto, postProducto, putProducto } = require('../Controllers/controlador-producto');
+const { getProducto, postProducto, putProducto, getProductByDescription } = require('../Controllers/controlador-producto');
 const { postCompra, getCompra } = require('../Controllers/controlador-compra');
 const { postVenta,getVenta } = require('../Controllers/controlador-venta');
 
@@ -23,6 +23,7 @@ router.put('/api/categoria/actualizar',putCategoriaById);
 //Producto
 router.get('/api/producto',getProducto);
 router.post('/api/producto/nuevo', postProducto);
+router.post('/api/productos-por-descripcion',getProductByDescription)
 router.put('/api/producto/actualizar', putProducto)
 //Compra
 router.get('/api/compra', getCompra);
