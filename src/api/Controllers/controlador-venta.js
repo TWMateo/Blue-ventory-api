@@ -1,6 +1,6 @@
-const { db } = require('../Config/cnn');
+const { db } = require('../../Config/cnn');
 const { crearErrorJson } = require('../middlewares/error-handler');
-const { validarFormatoFecha, validarExistenciaBD, validarStockProductoBD } = require('../utils/helpers')
+const { validarFormatoFecha, validarExistenciaBD, validarStockProductoBD } = require('../../utils/helpers')
 
 const postVenta = async (req, res) => {
     const { fecha_venta, total_venta, detalles_venta } = req.body;

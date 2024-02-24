@@ -10,7 +10,7 @@ app.use(express.json());
 //Midle - Analizá y procesa las solicitudes con datos codificados en la url
 app.use(express.urlencoded({extended:true}))
 //Rutas
-app.use(require('./Routes/index'));
+app.use(require('./src/api/Routes/index'));
 
 app.get('/',(req,res)=>{
     res.send('<h1>Mi página de APIS</h1>')

@@ -1,5 +1,5 @@
-const { db } = require('../Config/cnn');
-const { validarFormatoFecha, validarExistenciaBD } = require('../utils/helpers');
+const { db } = require('../../Config/cnn');
+const { validarFormatoFecha, validarExistenciaBD } = require('../../utils/helpers');
 const { crearErrorJson } = require('../middlewares/error-handler');
 
 const postCompra = async (req, res) => {
