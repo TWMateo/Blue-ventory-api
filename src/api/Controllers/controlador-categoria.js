@@ -1,5 +1,5 @@
 const express = require('express');
-const { db } = require('../../Config/cnn');
+const { db } = require('../../Config/db');
 
 const getCategoria = async (req, res) => {
     try {

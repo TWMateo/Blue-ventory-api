@@ -1,5 +1,5 @@
 const { response } = require('express');
-const { db } = require('../../Config/cnn');
+const { db } = require('../../Config/db');
 const { crearErrorJson } = require('../middlewares/error-handler')
 
 const getProducto = async (req, res) => {

@@ -1,4 +1,4 @@
-const { db } = require('../../Config/cnn');
+const { db } = require('../../Config/db');
 const { crearErrorJson } = require('../middlewares/error-handler');
 const { validarFormatoFecha, validarExistenciaBD, validarStockProductoBD } = require('../../utils/helpers')
 

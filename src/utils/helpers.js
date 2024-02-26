@@ -1,4 +1,4 @@
-const { db } = require('../Config/cnn');
+const { db } = require('../Config/db');
 
 const validarFormatoFecha = (fecha) => {
     const regex = /^\d{4}-\d{2}-\d{2}$/;
