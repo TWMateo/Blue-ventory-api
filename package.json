@@ -4,7 +4,8 @@
   "description": "Api para el manejo de inventario y control financiero de una tienda de ropa.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 const { db } = require('../../Config/db');
 const { validarFormatoFecha, validarExistenciaBD } = require('../../utils/helpers');
-const { crearErrorJson } = require('../middlewares/error-handler');
+const { crearErrorJson } = require('../../utils/error-handler');
 
 const postCompra = async (req, res) => {
     const { fecha_compra, total_compra, detalles_compra } = req.body;

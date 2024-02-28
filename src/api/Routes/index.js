@@ -5,17 +5,18 @@ router.use(cors());
 
 //Variables que llaman a metodos por desestructuración
 //de los distintos controles
-const{ getMarca, postMarca, putMarcaById } = require('../Controllers/controlador-marca')
-const { getCategoria, postCategoria, putCategoriaById } = require('../Controllers/controlador-categoria')
-const { getProducto, postProducto, putProducto, getProductByDescription } = require('../Controllers/controlador-producto');
-const { postCompra, getCompra } = require('../Controllers/controlador-compra');
-const { postVenta,getVenta } = require('../Controllers/controlador-venta');
+const{ getMarca, postMarca, putMarcaById,getMarcas } = require('../Controllers/marcaController')
+const { getCategoria, postCategoria, putCategoriaById } = require('../Controllers/categoriaController')
+const { getProducto, postProducto, putProducto, getProductByDescription } = require('../Controllers/productoController');
+const { postCompra, getCompra } = require('../Controllers/compraController');
+const { postVenta,getVenta } = require('../Controllers/ventaController');
 
 //RUTAS
 //Marca
 router.get('/api/marca',getMarca);
 router.post('/api/marca/nuevo', postMarca);
 router.put('/api/marca/actualizar',putMarcaById);
+router.get('/api/marcas',getMarcas)
 //Categoría
 router.get('/api/categoria',getCategoria);
 router.post('/api/categoria/nuevo',postCategoria);

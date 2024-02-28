@@ -1,5 +1,5 @@
 const { db } = require('../../Config/db');
-const { crearErrorJson } = require('../middlewares/error-handler');
+const { crearErrorJson } = require('../../utils/error-handler');
 const { validarFormatoFecha, validarExistenciaBD, validarStockProductoBD } = require('../../utils/helpers')
 
 const postVenta = async (req, res) => {

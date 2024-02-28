@@ -1,9 +1,10 @@
 const express = require('express');
 const { db } = require('../../Config/db');
+const categoriaService = require('../../services/categoriaService')
 
 const getCategoria = async (req, res) => {
     try {
-        const response = await db.any('SELECT * FROM tbl_categoria');
+        const response = await categoriaService.getCategoria();
         return res.json({
             code:0,
             message:'Ok',
