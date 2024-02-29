@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   tbl_categoria.init({
     categoria_id: {
-      allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
