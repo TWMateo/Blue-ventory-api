@@ -25,9 +25,8 @@ const postCategoria = async (req, res) => {
         return res.status(404).json(crearErrorJson('E001', 'nombre_categoria'))
     }
     try {
-        console.log(req.body)
         const response = await categoriaService.create(req.body)
-        return res.status(200).json({
+        return res.status(201).json({
             code: 0,
             message: `Categoría con nombre ${nombre_categoria} creada con exito.`
         })
@@ -41,18 +40,12 @@ const putCategoriaById = async (req, res) => {
     const nombre_categoria = req.query.nombre_categoria;
     console.log(id)
     if (!id || id.length == 0) {
-        return res.status(200).json({
-            code: 'E001',
-            message: 'Error de validación de entrada - El campo id debe ser obligatorio en su solicitud.'
-        })
+        return res.status(404).json(crearErrorJson('E001','categoria_id'))
     }
     const categoria = await categoriaService.findById(id)
     if (categoria) {
         if (!nombre_categoria || nombre_categoria.length == 0) {
-            return res.json({
-                code: 'E001',
-                message: 'Error de validación de entrada - El campo nombre_categoría debe ser obligatorio en su solicitud.'
-            })
+            return res.status(404).json(crearErrorJson('E001','nombre_categoria'))
         }
         try {
             categoria.nombre_categoria = nombre_categoria
@@ -62,10 +55,7 @@ const putCategoriaById = async (req, res) => {
                 message: `Nombre de categoría de ropa con id ${id} actualizada con exito a ${nombre_categoria}.`
             })
         } catch (error) {
-            res.json({
-                code: 'E009',
-                message: 'Solicitud no procesable - Error en la base de datos.'
-            })
+            res.json(crearErrorJson('E009'))
         }
     } else {
         return res.status(404).json(crearErrorJson('E002', 'categoria_id'))

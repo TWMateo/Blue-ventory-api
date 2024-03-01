@@ -14,4 +14,4 @@ db.sequelize
         console.log(`Listening on port http://localhost:${PORT}`)
         return app
     })
-}).catch((err)=>console.log('Unabla to connect to the database',err))
+}).catch((err)=>console.log('Unable to connect to the database',err))

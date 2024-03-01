@@ -27,6 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
+    timestamps:false,
+    freezeTableName:true,
     modelName: 'tbl_marca',
   });
   return tbl_marca;

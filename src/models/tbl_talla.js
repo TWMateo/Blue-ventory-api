@@ -17,9 +17,17 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   tbl_talla.init({
+    talla_id:{
+      allowNull:false,
+      autoIncrement:true,
+      primaryKey:true,
+      type:DataTypes.INTEGER
+    },
     nombre_talla: DataTypes.STRING(10)
   }, {
     sequelize,
+    freezeTableName:true,
+    timestamps:false,
     modelName: 'tbl_talla',
   });
   return tbl_talla;

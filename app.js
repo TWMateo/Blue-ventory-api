@@ -1,9 +1,9 @@
 const express = require('express');
 const app = express();
-//const orm = require('./src/models')
+const tallaRoutes = require('./src/api/Routes/tallaRoutes')
+const marcaRoutes = require('./src/api/Routes/marcaRoutes')
+const categoriaRoutes = require('./src/api/Routes/categoriaRoutes')
 app.disable('x-powered-by')
-
-//app.context.orm = orm
 
 //Midleware (se ejecuta entre la request y response)
 //Midle - Analiza y procesa las solicitudes con datos en formatos json
@@ -12,6 +12,9 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 //Rutas
 app.use(require('./src/api/Routes/index'));
+app.use(marcaRoutes)
+app.use(tallaRoutes)
+app.use(categoriaRoutes)
 
 app.get('/',(req,res)=>{
     res.send('<h1>Mi página de APIS</h1>')
@@ -21,9 +24,5 @@ app.get('/',(req,res)=>{
 app.use((req,res)=>{
     res.status(404).send('<h1>404</h1>')
 })
-
-// app.listen(PORT,()=>{
-//     console.log(`Server listening on port http://localhost:${PORT}`)
-// })
 
 module.exports = app
